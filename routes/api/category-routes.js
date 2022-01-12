@@ -31,7 +31,7 @@ router.get('/:id', (req, res) => {
   // be sure to include its associated Products
   Category.findOne({
     where: {
-      include: req.params.id
+      id: req.params.id
     },
     include: [
       {
@@ -40,31 +40,31 @@ router.get('/:id', (req, res) => {
       }
     ]
   }).then(catsOne => {
+    if(!catsOne){
+      res.status(404).json({ message: 'No post found with this id' });
+    }
     res.json(catsOne)
   })
+});
+
+
+router.post('/', (req, res) => {
+  // Create a new category
+  Category.create(
+    {
+      category_name: req.body.category_name
+    })
+    .then(catsPost => {
+      res.json(catsPost);
+    })
     .catch(err => {
-      if (err) { throw err };
+      console.log(err);
       res.status(500).json(err);
     })
 });
 
-//INSERT INTO category(category_name) VALUES(?)
-router.post('/', (req, res) => {
-  // create a new category
-  Category.create({
-    category_name: req.body.category_name
-  })
-  .then(catsPost => {
-    res.json(catsPost);
-  })
-  .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
-  })
-});
-
 router.put('/:id', (req, res) => {
-  // update a category by its `id` value
+  // Update a category by its `id` value
   Category.update(
     {
       category_name: req.body.category_name
@@ -84,8 +84,22 @@ router.put('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-  
-  // delete a category by its `id` value
+
+  // Delete a category by its `id` value
+  Category.destroy({
+    where: {
+      id: req.params.id
+    }
+  }).then(deleteCats => {
+    if (!deleteCats) {
+      res.status(404).json({ message: 'No post found with this id' });
+      return;
+    }
+  })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    })
 });
 
 module.exports = router;

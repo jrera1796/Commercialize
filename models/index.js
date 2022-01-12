@@ -34,9 +34,3 @@ module.exports = {
     ProductTag,
 };
 
-module.exports = {
-  Product,
-  Category,
-  Tag,
-  ProductTag,
-};
