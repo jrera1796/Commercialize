@@ -17,8 +17,7 @@ router.get('/', (req, res) => {
         'id',
         'product_name',
         'price',
-        'stock',
-        'tag_id'
+        'stock', 
       ]
     }],
   }).then(tagAll => {

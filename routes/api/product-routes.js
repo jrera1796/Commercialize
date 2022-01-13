@@ -21,8 +21,8 @@ router.get('/', (req, res) => {
       attributes: ['id', 'category_name']
     },
     {
-    model: Tag,
-    attributes: ['id', 'tag_name']
+      model: Tag,
+      attributes: ['id', 'tag_name']
     }
     ]
   }).then(prodsAll => {
@@ -48,12 +48,12 @@ router.get('/:id', (req, res) => {
       attributes: ['id', 'category_name']
     },
     {
-    model: Tag,
-    attributes: ['id', 'tag_name']
+      model: Tag,
+      attributes: ['id', 'tag_name']
     }
     ]
   }).then(prodsOne => {
-    if(!prodsOne){
+    if (!prodsOne) {
       res.status(404).json({ message: 'No post found with this id' });
     }
     res.json(prodsOne)
